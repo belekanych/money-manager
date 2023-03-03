@@ -1,9 +1,13 @@
-import React from 'react'
-import ReactDOM from 'react-dom/client'
-import { createBrowserRouter, RouterProvider } from "react-router-dom";
-import './index.css'
-import MainLayout from './layouts/MainLayout';
-import TransactionList from './pages/Transaction/TransactionList';
+import React from "react"
+import ReactDOM from "react-dom/client"
+import { createBrowserRouter, RouterProvider } from "react-router-dom"
+import "./index.css"
+import MainLayout from "./layouts/MainLayout"
+import TransactionList from "./pages/Transaction/TransactionList"
+import { Provider } from "react-redux"
+import store from "./store"
+import TransactionCreate from "./pages/Transaction/TransactionCreate"
+import { action as createTransactionAction } from "./pages/Transaction/TransactionCreate"
 
 const router = createBrowserRouter([
   {
@@ -16,7 +20,8 @@ const router = createBrowserRouter([
       },
       {
         path: "transactions/create",
-        element: <div>Add new transaction</div>
+        element: <TransactionCreate />,
+        action: createTransactionAction,
       },
       {
         path: "settings",
@@ -24,10 +29,12 @@ const router = createBrowserRouter([
       },
     ],
   },
-]);
+])
 
-ReactDOM.createRoot(document.getElementById('root') as HTMLElement).render(
+ReactDOM.createRoot(document.getElementById("root") as HTMLElement).render(
   <React.StrictMode>
-    <RouterProvider router={router} />
-  </React.StrictMode>,
+    <Provider store={store}>
+      <RouterProvider router={router} />
+    </Provider>
+  </React.StrictMode>
 )

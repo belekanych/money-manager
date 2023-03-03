@@ -1,17 +1,15 @@
-import { useState } from "react"
+import Transaction from "@/models/Transaction"
+import { useSelector } from "react-redux"
 
 function TransactionList() {
-  const [transactions] = useState([
-    1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16
-  ])
+  const transactions: Transaction[] = useSelector((state) =>
+    state.transaction.items.map((name: string) => new Transaction(name))
+  )
 
   return (
     <section>
-      {transactions.map((t) => (
-        <article
-          key={t}
-          className="bg-white shadow rounded m-4 p-4"
-        >
+      {transactions.map((t, index) => (
+        <article key={index} className="bg-white shadow rounded m-4 p-4">
           Transaction
         </article>
       ))}
