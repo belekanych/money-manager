@@ -1,18 +1,23 @@
-import Transaction from "@/models/Transaction"
-import { useSelector } from "react-redux"
+import { collection, query, orderBy } from "firebase/firestore"
+import { firestore } from "@/vendor/firebase"
+import { useCollectionData } from "react-firebase-hooks/firestore"
 
 function TransactionList() {
-  const transactions: Transaction[] = useSelector((state) =>
-    state.transaction.items.map((name: string) => new Transaction(name))
-  )
+  const transactionsRef = collection(firestore, "transactions")
+  const transactionsQuery = query(transactionsRef, orderBy("date", "desc"))
+
+  const [transactions] = useCollectionData(transactionsQuery)
 
   return (
     <section>
-      {transactions.map((t, index) => (
-        <article key={index} className="bg-white shadow rounded m-4 p-4">
-          Transaction
-        </article>
-      ))}
+      {transactions &&
+        transactions.map((transaction, index) => (
+          <article key={index} className="bg-white shadow rounded m-4 p-4">
+            {transaction.category}
+            <br />
+            {transaction.amount}
+          </article>
+        ))}
     </section>
   )
 }
