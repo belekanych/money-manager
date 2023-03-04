@@ -1,8 +1,9 @@
 import { redirect, Form } from "react-router-dom"
 import { collection, addDoc } from "firebase/firestore"
 import { firestore } from "@/vendor/firebase"
+import type { ActionFunctionArgs } from "react-router-dom"
 
-export async function action({ request }) {
+export async function action({ request }: ActionFunctionArgs) {
   const formData = await request.formData()
   const data = Object.fromEntries(formData)
 
