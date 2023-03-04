@@ -3,6 +3,7 @@ import { firestore } from "@/vendor/firebase"
 import { useCollectionData } from "react-firebase-hooks/firestore"
 import { Link } from "react-router-dom"
 import { TfiPlus } from "react-icons/tfi"
+import PageLayout from "@/layouts/PageLayout"
 
 function CategoryList() {
   const categoriesRef = collection(firestore, "categories")
@@ -11,16 +12,17 @@ function CategoryList() {
   const [categories] = useCollectionData(categoriesQuery)
 
   return (
-    <div className="p-4">
-      <header className="flex justify-between items-center my-4">
-        <h1 className="font-bold text-4xl text-gray-800">Categories</h1>
+    <PageLayout
+      title="Categories"
+      actionButton={
         <Link
           to="/categories/create"
           className="p-2 bg-white rounded-full text-gray-800 shadow"
         >
           <TfiPlus />
         </Link>
-      </header>
+      }
+    >
       <section>
         {categories &&
           categories.map((category, index) => (
@@ -37,7 +39,7 @@ function CategoryList() {
             </article>
           ))}
       </section>
-    </div>
+    </PageLayout>
   )
 }
 
